@@ -37,7 +37,7 @@ const AllServices = () => {
             <p>Seller: {service.seller?.name}</p>
             <p>{service?.description}</p>
             <div className="card-actions justify-end">
-              <button className="btn btn-primary">Subscribe Our Service</button>
+              <button className="btn btn-primary">Order Service</button>
             </div>
           </div>
         </div>

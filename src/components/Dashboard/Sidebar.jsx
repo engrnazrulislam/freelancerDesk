@@ -17,7 +17,7 @@ const Sidebar = () => {
   const buyerMenus = [
     { to: "/dashboard", icon: FiBarChart2, label: "Dashboard" },
     { to: "/dashboard/services", icon: MdMiscellaneousServices, label: "Choose Services" },
-    { to: "", icon: MdUnsubscribe, label: "My Subscriptions" },
+    { to: "", icon: MdUnsubscribe, label: "My Orders" },
     { to: "", icon: FiStar, label: "My Reviews" },
   ];
 
@@ -27,7 +27,7 @@ const Sidebar = () => {
     { to: "/dashboard/category/add", icon: FiPlusCircle, label: "Add Categories"},
     { to: "/dashboard/services", icon: MdMiscellaneousServices, label: "Our Services" },
     { to: "/dashboard/services/add", icon: MdMiscellaneousServices, label: "Add Services" },
-    { to: "", icon: MdUnsubscribe, label: "View Subscriptions" },
+    { to: "", icon: MdUnsubscribe, label: "View Orders" },
     { to: "", icon: FiStar, label: "View Reviews" },
   ];
 
@@ -37,8 +37,8 @@ const Sidebar = () => {
     { to: "/dashboard/services", icon: MdMiscellaneousServices, label: "View All Services" },
     { to: "/dashboard/category/add", icon: FiPlusCircle, label: "Add Categories"},
     { to: "/dashboard/categories", icon: BiCategory, label: "View All Categories" },
-    { to: "", icon: FiShoppingCart, label: "View All Subscriptions" },
-    { to: "", icon: FiStar, label: "View All Reviews" },
+    { to: "", icon: FiShoppingCart, label: "View Orders" },
+    { to: "", icon: FiStar, label: "View Reviews" },
     { to: "", icon: FiUsers, label: "Users" },
   ];
 
