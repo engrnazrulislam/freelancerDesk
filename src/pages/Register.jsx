@@ -66,7 +66,7 @@ const Register = () => {
               <input
                 id="first_name"
                 type="text"
-                placeholder="John"
+                placeholder="Your First Name"
                 className="input input-bordered w-full"
                 {...register("first_name", {
                   required: "First Name is Required",
@@ -86,7 +86,7 @@ const Register = () => {
               <input
                 id="last_name"
                 type="text"
-                placeholder="Doe"
+                placeholder="Your Last Name"
                 className="input input-bordered w-full"
                 {...register("last_name", {
                   required: "Last Name is Required",
@@ -106,7 +106,7 @@ const Register = () => {
               <input
                 id="email"
                 type="email"
-                placeholder="name@example.com"
+                placeholder="Your Email Address"
                 className="input input-bordered w-full"
                 {...register("email", {
                   required: "Email is Required",
@@ -127,7 +127,7 @@ const Register = () => {
               <input
                 id="address"
                 type="text"
-                placeholder="7/A Dhanmondi, Dhaka"
+                placeholder="Your Address/Location"
                 className="input input-bordered w-full"
                 {...register("address")}
               />
