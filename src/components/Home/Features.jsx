@@ -1,8 +1,6 @@
 import { IoMdTrendingUp } from "react-icons/io";
 import { LuCircleDollarSign } from "react-icons/lu";
 import { RiFileEditFill } from "react-icons/ri";
-import { FaTags } from "react-icons/fa";
-import { BsShieldLock } from "react-icons/bs";
 import { IoShieldCheckmark } from "react-icons/io5";
 
 const Features = () => {

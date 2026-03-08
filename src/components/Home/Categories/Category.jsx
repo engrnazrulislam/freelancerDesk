@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import apiClient from "../../../services/api-client";
 import CategoryItems from "./CategoryItems";
+import { Link } from "react-router";
 
 const Category = () => {
   const [categories, setCategories] = useState([]);
@@ -13,12 +14,11 @@ const Category = () => {
       {/* Category Heading  */}
       <div className="flex justify-between items-center mb-8">
         <h2 className="text-3xl font-bold">Service Categories</h2>
-        <a
-          href="#"
+        <Link to="categories"
           className="btn btn-ghost px-6 py-6 rounded-full text-lg"
         >
           View All
-        </a>
+        </Link>
       </div>
 
       {/* Category Grid  */}

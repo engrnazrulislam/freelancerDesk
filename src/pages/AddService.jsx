@@ -18,88 +18,120 @@ const AddService = () => {
 
   // Fetch Categories
   useEffect(() => {
-    apiClient.get("/categories/").then((res) => {
-      console.log(res.data);
-      setCategories(res.data);
-    });
-  }, []);
+  apiClient.get("/categories/").then((res) => {
+    setCategories(res.data);
+  });
+}, []);
 
-  // Submit Service Details
-  const handleServiceAdd = async (data) => {
-    try {
-      const serviceRes = await authApiClient.post("/services/", data);
-      setServiceId(serviceRes.data.id);
-    } catch (error) {
-      console.log("Error adding service", error);
-    }
-  };
+  // Submit Service
+const handleServiceAdd = async (data) => {
+  try {
+    // Build payload according to DRF ServiceSerializer
+    const payload = {
+      title: data.title,
+      description: data.description,
+      price: Number(data.price),               // ensure number
+      delivery_time: Number(data.delivery_time), // ensure number
+      is_active: true,                          // optional, set True
+      category_id: data.category,               // must match serializer
+    };
+
+    // POST request to create service
+    const serviceRes = await authApiClient.post("/seller/services/", payload);
+
+    setServiceId(serviceRes.data.id);
+    alert("Service created successfully! Now upload images.");
+
+  } catch (error) {
+    console.log("Error adding service", error.response?.data || error);
+    alert("Failed to add service. Check console for details.");
+  }
+};
 
   // Handle Image Change
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
-    console.log(files);
     setImages(files);
-    setPreviewImages(files.map((file) => URL.createObjectURL(file)));
+    const preview = files.map((file) => URL.createObjectURL(file));
+    setPreviewImages(preview);
   };
 
   // Handle Image Upload
   const handleUpload = async () => {
-    if (!images.length) return alert("Please select images.");
-    // [file, file]
+    if (!images.length) {
+      alert("Please select images.");
+      return;
+    }
+
     setLoading(true);
+
     try {
       for (const image of images) {
         const formData = new FormData();
         formData.append("image", image);
-        console.log(formData);
-        await authApiClient.post(`/services/${serviceId}/images/`, formData);
-        setLoading(false);
+
+        await authApiClient.post(
+          `/seller/services/${serviceId}/images/`,
+          formData,
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+          }
+        );
       }
+
       alert("Images uploaded successfully");
+      setPreviewImages([]);
+      setImages([]);
     } catch (error) {
-      console.log(("Error uploading image", error));
+      console.log("Error uploading image", error);
+      alert("Failed to upload images. Check console.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="max-w-2xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
       <h2 className="text-2xl font-semibold mb-4">Add New Service</h2>
+
       {!serviceId ? (
         <form onSubmit={handleSubmit(handleServiceAdd)} className="space-y-4">
+          
+          {/* Title */}
           <div>
-            <label className="block text-sm font-medium">Service Name</label>
+            <label className="block text-sm font-medium">Title</label>
             <input
-              {...register("name", { required: true })}
+              {...register("title", { required: "Title is required" })}
               className="input input-bordered w-full"
-              placeholder="Service Name"
+              placeholder="Service Title"
             />
-            {errors.name && (
-              <p className="text-red-500 text-xs">This field is required</p>
+            {errors.title && (
+              <p className="text-red-500 text-xs">{errors.title.message}</p>
             )}
           </div>
 
+          {/* Description */}
           <div>
             <label className="block text-sm font-medium">Description</label>
             <textarea
-              {...register("description", { required: true })}
+              {...register("description", { required: "Description is required" })}
               className="textarea textarea-bordered w-full"
               placeholder="Description"
-            ></textarea>
+            />
             {errors.description && (
-              <p className="text-red-500 text-xs">This field is required</p>
+              <p className="text-red-500 text-xs">{errors.description.message}</p>
             )}
           </div>
 
+          {/* Price */}
           <div>
             <label className="block text-sm font-medium">Price</label>
             <input
-              type="text"
+              type="number"
+              step="0.01"
               {...register("price", {
-                required: "This Field is required",
-                validate: (value) => {
-                  const parsedValue = parseFloat(value);
-                  return !isNaN(parsedValue) || "Please enter a valid number!";
-                },
+                required: "Price is required",
+                min: { value: 1, message: "Price must be greater than 0" },
               })}
               className="input input-bordered w-full"
               placeholder="Price"
@@ -109,35 +141,51 @@ const AddService = () => {
             )}
           </div>
 
+          {/* Category Select */}
           <div>
-            <label className="block text-sm font-medium">Stock Quantity</label>
-            <input
-              type="number"
-              {...register("stock", { required: true })}
-              className="input input-bordered w-full"
-              placeholder="Stock"
-            />
-            {errors.stock && (
-              <p className="text-red-500 text-xs">This field is required</p>
-            )}
-          </div>
+          <label className="block text-sm font-medium">
+            Category
+          </label>
 
-          {/* Dropdown for categories */}
-          <div>
-            <label className="block text-sm font-medium">Category</label>
-            <select
-              {...register("category", { required: true })}
-              className="select select-bordered w-full"
-            >
-              <option value="">Select a category</option>
+          <select
+            {...register("category", { required: true })}
+            className="select select-bordered w-full"
+          >
+
+            <option value="">
+              Select Category
+            </option>
+
               {categories.map((cat) => (
                 <option key={cat.id} value={cat.id}>
                   {cat.name}
                 </option>
               ))}
+
             </select>
+
             {errors.category && (
-              <p className="text-red-500 text-xs">This field is required</p>
+              <p className="text-red-500 text-xs">
+                Category is required
+              </p>
+            )}
+          </div>
+          
+
+          {/* Delivery Time */}
+          <div>
+            <label className="block text-sm font-medium">Delivery Time (Days)</label>
+            <input
+              type="number"
+              {...register("delivery_time", {
+                required: "Delivery time is required",
+                min: { value: 1, message: "Minimum 1 day required" },
+              })}
+              className="input input-bordered w-full"
+              placeholder="Enter delivery time in days"
+            />
+            {errors.delivery_time && (
+              <p className="text-red-500 text-xs">{errors.delivery_time.message}</p>
             )}
           </div>
 
@@ -148,6 +196,7 @@ const AddService = () => {
       ) : (
         <div>
           <h3 className="text-lg font-medium mb-2">Upload Service Images</h3>
+
           <input
             type="file"
             multiple
@@ -155,8 +204,9 @@ const AddService = () => {
             className="file-input file-input-bordered w-full"
             onChange={handleImageChange}
           />
+
           {previewImages.length > 0 && (
-            <div className="flex gap-2 mt-2">
+            <div className="flex gap-2 mt-3 flex-wrap">
               {previewImages.map((src, idx) => (
                 <img
                   key={idx}
@@ -170,7 +220,7 @@ const AddService = () => {
 
           <button
             onClick={handleUpload}
-            className="btn btn-primary w-full mt-2"
+            className="btn btn-primary w-full mt-4"
             disabled={loading}
           >
             {loading ? "Uploading images..." : "Upload Images"}

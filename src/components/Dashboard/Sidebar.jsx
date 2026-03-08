@@ -1,39 +1,48 @@
 import {
   FiBarChart2,
-  FiPackage,
   FiPlusCircle,
   FiShoppingCart,
   FiStar,
   FiTag,
   FiUsers,
 } from "react-icons/fi";
+import { MdMiscellaneousServices, MdUnsubscribe  } from "react-icons/md";
+import { BiCategory } from "react-icons/bi";
 import { Link } from "react-router";
 import useAuthContext from "../../hooks/useAuthContext";
 
 const Sidebar = () => {
   const { user } = useAuthContext();
 
-  const customerMenus = [
+  const buyerMenus = [
     { to: "/dashboard", icon: FiBarChart2, label: "Dashboard" },
-    { to: "/dashboard/cart", icon: FiShoppingCart, label: "Cart" },
-    { to: "/dashboard/orders", icon: FiShoppingCart, label: "Orders" },
-    { to: "/reviews", icon: FiStar, label: "Reviews" },
+    { to: "/dashboard/services", icon: MdMiscellaneousServices, label: "Choose Services" },
+    { to: "", icon: MdUnsubscribe, label: "My Subscriptions" },
+    { to: "", icon: FiStar, label: "My Reviews" },
+  ];
+
+  const sellerMenus = [
+    { to: "/dashboard", icon: FiBarChart2, label: "Dashboard" },
+    { to: "/dashboard/categories", icon: BiCategory, label: "View Categories" },
+    { to: "/dashboard/category/add", icon: FiPlusCircle, label: "Add Categories"},
+    { to: "/dashboard/services", icon: MdMiscellaneousServices, label: "Our Services" },
+    { to: "/dashboard/services/add", icon: MdMiscellaneousServices, label: "Add Services" },
+    { to: "", icon: MdUnsubscribe, label: "View Subscriptions" },
+    { to: "", icon: FiStar, label: "View Reviews" },
   ];
 
   const adminMenues = [
     { to: "/dashboard", icon: FiBarChart2, label: "Dashboard" },
-    { to: "/products", icon: FiPackage, label: "Products" },
-    { to: "/dashboard/products/add", icon: FiPlusCircle, label: "Add Product" },
-    { to: "/categories", icon: FiTag, label: "Categories" },
-    { to: "/categories/add", icon: FiPlusCircle, label: "Add Category" },
-    { to: "/dashboard/cart", icon: FiShoppingCart, label: "Cart" },
-    { to: "/dashboard/orders", icon: FiShoppingCart, label: "Orders" },
-    { to: "/reviews", icon: FiStar, label: "Reviews" },
-    { to: "/users", icon: FiUsers, label: "Users" },
+    { to: "/dashboard/services/add", icon: MdMiscellaneousServices, label: "Add Services" },
+    { to: "/dashboard/services", icon: MdMiscellaneousServices, label: "View All Services" },
+    { to: "/dashboard/category/add", icon: FiPlusCircle, label: "Add Categories"},
+    { to: "/dashboard/categories", icon: BiCategory, label: "View All Categories" },
+    { to: "", icon: FiShoppingCart, label: "View All Subscriptions" },
+    { to: "", icon: FiStar, label: "View All Reviews" },
+    { to: "", icon: FiUsers, label: "Users" },
   ];
 
-  const menuItems = user.is_staff ? adminMenues : customerMenus;
-
+  const menuItems = user?.is_staff ? adminMenues : user?.role==="Seller"? sellerMenus : buyerMenus;
   return (
     <div className="drawer-side z-10">
       <label

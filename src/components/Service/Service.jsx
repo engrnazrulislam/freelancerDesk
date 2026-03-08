@@ -7,6 +7,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import ErroAlert from "../ErroAlert";
 import apiClient from "../../services/api-client";
+import { Link } from "react-router";
 
 const Service = () => {
   const [services, setServices] = useState([]);
@@ -27,12 +28,11 @@ const Service = () => {
       <div className="py-12 px-2 max-w-7xl mx-auto">
         <div className="flex justify-between items-center px-2 md:px-8 mb-4">
           <h2 className="text-3xl md:text-4xl font-bold">Trending Services</h2>
-          <a
-            href="#"
+          <Link to="services"
             className="btn btn-ghost px-6 py-6 rounded-full text-lg"
           >
             View All
-          </a>
+          </Link>
         </div>
         {/* Spinner  */}
         {isLoading && (

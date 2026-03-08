@@ -9,10 +9,13 @@ import PrivateRoute from "../components/PrivateRoute";
 import ActivateAccount from "../components/Registration/ActivateAccount";
 import DashboardLayout from "../layouts/DashboardLayout";
 import Profile from "../pages/Profile";
-import Orders from "../pages/Orders";
-import PaymentSuccess from "../pages/PaymentSuccess";
-import ServiceDetail from "../pages/ServiceDetail";
 import AddService from "../pages/AddService";
+import AddCategory from "../pages/AddCategory";
+import Categories from "../pages/Categories";
+import AllServices from "../pages/AllServices";
+import Community from "../pages/Community";
+import Blog from "../pages/Blog";
+import Contact from "../pages/Contact";
 
 const AppRoutes = () => {
   return (
@@ -25,7 +28,11 @@ const AppRoutes = () => {
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="activate/:uid/:token" element={<ActivateAccount />} />
-        <Route path="service/:serviceId" element={<ServiceDetail />} />
+        <Route path="services" element={<AllServices/>} />
+        <Route path="categories" element={<Categories/>} />
+        <Route path="community" element={<Community/>} />
+        <Route path="blog" element={<Blog/>} />
+        <Route path="contact" element={<Contact/>} />
       </Route>
       {/* Private Routes  */}
       <Route
@@ -38,10 +45,11 @@ const AppRoutes = () => {
       >
         <Route index element={<Dashboard />} />
         <Route path="profile" element={<Profile />} />
-        <Route path="orders" element={<Orders />} />
-        <Route path="payment/success/" element={<PaymentSuccess />} />
         <Route path="services/add" element={<AddService />} />
-      </Route>
+        <Route path="category/add" element={<AddCategory/>} />
+        <Route path="categories" element={<Categories/>} />
+        <Route path="services" element={<AllServices/>} />
+    </Route>
     </Routes>
   );
 };

@@ -3,8 +3,7 @@ import { Link, Navigate } from "react-router";
 import useAuthContext from "../../hooks/useAuthContext";
 
 const Navbar = ({ sidebarOpen }) => {
-  const { logoutUser } = useAuthContext();
-
+  const { user, logoutUser } = useAuthContext();
   return (
     <div className="navbar bg-base-100 border-b">
       <div className="flex-none lg:hidden">
@@ -21,14 +20,17 @@ const Navbar = ({ sidebarOpen }) => {
       </div>
       <div className="flex-none">
         <div className="dropdown dropdown-end">
+          <div className="flex justify-between items-center gap-2">
+          <h2 className="font-semibold">{user.first_name} {user.last_name}</h2>
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">
               <img
-                alt="User avatar"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                alt="User Avatar"
+                 src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
               />
             </div>
           </label>
+          </div>
           <ul
             tabIndex={0}
             className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"

@@ -145,6 +145,31 @@ const Register = () => {
                 {...register("phone_number")}
               />
             </div>
+            
+            <div className="form-control">
+              <label className="label" htmlFor="role">
+                <span className="label-text">Role</span>
+              </label>
+
+              <select
+                id="role"
+                className="select select-bordered w-full"
+                {...register("role", { required: "Role is required" })}
+                defaultValue=""
+              >
+                <option value="" disabled>
+                  Select Role
+                </option>
+                <option value="Buyer">Buyer</option>
+                <option value="Seller">Seller</option>
+              </select>
+
+              {errors.role && (
+                <span className="label-text-alt text-error">
+                  {errors.role.message}
+                </span>
+              )}
+            </div>
 
             <div className="form-control">
               <label className="label" htmlFor="password">

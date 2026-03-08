@@ -40,10 +40,10 @@ const Navbar = () => {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <li><Link to="about">About Us</Link></li>
-          <li><Link to="service">Our Services</Link></li>
-          <li><Link to="/">Community</Link></li>
-          <li><Link to="/">Blog</Link></li>
-          <li><Link to="/">Contact</Link></li>
+          <li><Link to="services">Our Services</Link></li>
+          <li><Link to="community">Community</Link></li>
+          <li><Link to="blog">Blog</Link></li>
+          <li><Link to="contact">Contact</Link></li>
         </ul>
       </div>
       <div className="navbar-end">
@@ -88,17 +88,11 @@ const Navbar = () => {
                 tabIndex={0}
                 className="menu menu-sm dropdown-content bg-base-100 rounded-box z-50 mt-3 w-52 p-2 shadow"
               >
-                <li>
-                  <Link to="profile" className="justify-between">Profile
-                  <span className="badge cursor-pointer badge-ghost" onClick={(e)=>e.stopPropagation()}>New</span>
-                  </Link>
-                </li>
+                
                 <li>
                   <Link to="/dashboard">Dashboard</Link>
                 </li>
-                <li>
-                  <Link to="/settings">Settings</Link>
-                </li>
+                
                 <li>
                   <Link to="/" onClick={logoutUser}>Logout</Link>
                 </li>
